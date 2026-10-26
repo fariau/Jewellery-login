@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Sign in – Tiffany &amp; Co.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Jost:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #eadfd7;
+            --bg2: #e0d2c8;
+            --text: #2b2625;
+            --muted: #6a5d57;
+            --line: #b3a398;
+            --brass: #8f6330;
+            --brass-text: #fff8ef;
+            --err: #a3262f;
+            --hero-a: #d9b3a6;
+            --hero-b: #6d4b47;
+            --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+            --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg) url("images/background.jpg") center top/cover no-repeat;
+            color: var(--text);
+            font-family: var(--sans);
+            font-weight: 300;
+            min-height: 100vh
+        }
+
+        a {
+            color: inherit;
+            text-underline-offset: 3px;
+            text-decoration-color: var(--brass)
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--brass);
+            outline-offset: 3px
+        }
+
+        header {
+            position: absolute;
+            inset: 0 0 auto 0;
+            z-index: 4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 28px 6vw
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 26px;
+            letter-spacing: .08em;
+            color: #fff;
+            text-decoration: none
+        }
+
+        .theme {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, .55);
+            color: #fff;
+            font: inherit;
+            font-size: 13px;
+            padding: 7px 14px;
+            border-radius: 99px;
+            cursor: pointer
+        }
+
+        .hero {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(120deg, var(--hero-a), var(--hero-b));
+            text-align: center
+        }
+
+        .hero .bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 60%
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: linear-gradient(rgba(30, 18, 16, .62), rgba(30, 18, 16, .38) 55%, rgba(30, 18, 16, .5))
+        }
+
+        .hero::after {
+            display: none;
+            z-index: 2;
+            content: "";
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 30%;
+            background: linear-gradient(transparent, var(--bg))
+        }
+
+        .hero h2 {
+            position: relative;
+            z-index: 3;
+            margin: 0;
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 34px;
+            color: #fff;
+            letter-spacing: .02em
+        }
+
+        .hero .ghost {
+            position: absolute;
+            z-index: 3;
+            left: 50%;
+            bottom: -12px;
+            transform: translateX(-50%);
+            font-family: var(--serif);
+            font-size: clamp(90px, 17vw, 170px);
+            color: rgba(255, 255, 255, .55);
+            white-space: nowrap;
+            line-height: 1;
+            pointer-events: none
+        }
+
+        .main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 6vw 80px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 72px;
+            align-items: center
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: 38px;
+            margin: 0 0 6px
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0 0 34px
+        }
+
+        .field {
+            margin-bottom: 24px
+        }
+
+        .field label {
+            display: block;
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 2px
+        }
+
+        .control {
+            position: relative
+        }
+
+        input[type=email],
+        input[type=password],
+        input[type=text] {
+            width: 100%;
+            padding: 10px 0;
+            font: inherit;
+            font-size: 16px;
+            font-weight: 300;
+            color: var(--text);
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid var(--line);
+            border-radius: 0
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom-color: var(--brass)
+        }
+
+        input:focus-visible {
+            outline: none;
+            border-bottom: 2px solid var(--brass)
+        }
+
+        input[aria-invalid=true] {
+            border-bottom-color: var(--err)
+        }
+
+        .err {
+            color: var(--err);
+            font-size: 13px;
+            margin: 6px 0 0
+        }
+
+        .eye {
+            position: absolute;
+            right: 0;
+            top: 6px;
+            background: none;
+            border: 0;
+            color: var(--muted);
+            font: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 4px 0
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 6px 0 30px;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .check {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            cursor: pointer
+        }
+
+        .check input {
+            accent-color: var(--brass)
+        }
+
+        .btn {
+            background: var(--brass);
+            color: var(--brass-text);
+            border: 0;
+            border-radius: 99px;
+            height: 44px;
+            padding: 0 34px;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 400;
+            cursor: pointer
+        }
+
+        .btn:hover {
+            filter: brightness(1.1)
+        }
+
+        .foot {
+            margin-top: 28px;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .tabs {
+            display: flex;
+            gap: 30px;
+            border-bottom: 1px solid var(--line);
+            margin-bottom: 30px
+        }
+
+        .tab {
+            background: none;
+            border: 0;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            padding: 0 0 12px;
+            font: inherit;
+            font-size: 15px;
+            color: var(--text);
+            opacity: .65;
+            cursor: pointer
+        }
+
+        .tab[aria-selected=true] {
+            opacity: 1;
+            color: var(--text);
+            border-bottom-color: var(--brass)
+        }
+
+        form[hidden] {
+            display: none
+        }
+
+        .photo {
+            margin: 0;
+            aspect-ratio: 3/4;
+            background: var(--bg2);
+            overflow: hidden;
+            display: flex
+        }
+
+        .photo img,
+        .photo svg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 42%;
+            display: block
+        }
+
+        .ok {
+            display: none
+        }
+
+        .ok.show {
+            display: block
+        }
+
+        .ok p {
+            color: var(--muted)
+        }
+
+        footer {
+            border-top: 1px solid var(--line);
+            padding: 26px 6vw;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        footer nav {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap
+        }
+
+        @media (max-width:760px) {
+            .hero {
+                height: 240px
+            }
+
+            .main {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding-top: 24px
+            }
+
+            .photo {
+                aspect-ratio: 4/3;
+                order: -1
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="logo" href="#">Tiffany &amp; Co.</a>
+    </header>
+
+    <section class="hero">
+        <h2 id="hh">Sign In</h2>
+        <img class="bg" src="images/banner.jpg" alt="Gold rings, earrings and pendants on ivory satin">
+
+
+    </section>
+
+    <div class="main">
+        <div>
+            <div class="tabs" id="tabs" role="tablist">
+                <button class="tab" id="tin" role="tab" type="button" data-go="in" aria-selected="true">Sign in</button>
+                <button class="tab" id="tup" role="tab" type="button" data-go="up" aria-selected="false">Create
+                    account</button>
+            </div>
+            <form id="f" novalidate>
+                <h1>Welcome back</h1>
+                <p class="sub">Sign in to see your orders and saved pieces.</p>
+
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input id="email" type="email" autocomplete="email" inputmode="email" aria-describedby="e1">
+                    <p class="err" id="e1" role="alert"></p>
+                </div>
+                <div class="field">
+                    <label for="pw">Password</label>
+                    <div class="control">
+                        <input id="pw" type="password" autocomplete="current-password" aria-describedby="e2">
+                        <button type="button" class="eye" id="eye" aria-label="Show password"
+                            aria-pressed="false">Show</button>
+                    </div>
+                    <p class="err" id="e2" role="alert"></p>
+                </div>
+                <div class="row">
+                    <label class="check"><input type="checkbox"><span>Keep me signed in</span></label>
+                    <a href="#forgot">Forgot password?</a>
+                </div>
+                <button class="btn" type="submit">Sign in</button>
+                <p class="foot">New to Tiffany? <a href="#register" data-go="up">Create an account</a></p>
+            </form>
+            <form id="su" novalidate hidden>
+                <h1>Join Tiffany</h1>
+                <p class="sub">Create an account to save pieces and track your orders.</p>
+                <div class="field"><label for="sname">Full name</label>
+                    <input id="sname" type="text" autocomplete="name" aria-describedby="s1">
+                    <p class="err" id="s1" role="alert"></p>
+                </div>
+                <div class="field"><label for="semail">Email address</label>
+                    <input id="semail" type="email" autocomplete="email" inputmode="email" aria-describedby="s2">
+                    <p class="err" id="s2" role="alert"></p>
+                </div>
+                <div class="field"><label for="spw">Password</label>
+                    <div class="control"><input id="spw" type="password" autocomplete="new-password"
+                            aria-describedby="s3">
+                        <button type="button" class="eye" id="seye" aria-label="Show password"
+                            aria-pressed="false">Show</button>
+                    </div>
+                    <p class="err" id="s3" role="alert"></p>
+                </div>
+                <div class="field"><label for="spw2">Confirm password</label>
+                    <input id="spw2" type="password" autocomplete="new-password" aria-describedby="s4">
+                    <p class="err" id="s4" role="alert"></p>
+                </div>
+                <div class="row" style="margin-bottom:6px"><label class="check"><input type="checkbox"
+                            id="agree"><span>I agree to the <a href="#terms">terms</a> and <a href="#privacy">privacy
+                                policy</a></span></label></div>
+                <p class="err" id="s5" role="alert" style="margin:0 0 24px"></p>
+                <button class="btn" type="submit">Create account</button>
+                <p class="foot">Already have an account? <a href="#login" data-go="in">Sign in</a></p>
+            </form>
+            <div class="ok" id="ok" role="status">
+                <h1 id="okh">You’re signed in</h1>
+                <p id="okmsg"></p>
+            </div>
+        </div>
+
+        <figure class="photo">
+            <img src="images/side.jpg" alt="Woman wearing gold necklace, rings and bracelets">
+        </figure>
+    </div>
+
+    <footer>
+        <nav><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Jewellery care</a><a href="#">Contact</a></nav>
+        <span>© 2026 Tiffany &amp; Co.</span>
+    </footer>
+
+    <script>
+        (function () {
+            var su = document.getElementById('su'), hh = document.getElementById('hh');
+            function show(m) {
+                var up = m === 'up';
+                hh.textContent = up ? 'Create Account' : 'Sign In';
+                document.getElementById('f').hidden = up; su.hidden = !up;
+                document.getElementById('tin').setAttribute('aria-selected', String(!up));
+                document.getElementById('tup').setAttribute('aria-selected', String(up));
+
+                document.title = (up ? 'Create account' : 'Sign in') + ' – Tiffany & Co.';
+            }
+            document.querySelectorAll('[data-go]').forEach(function (el) {
+                el.addEventListener('click', function (e) {e.preventDefault(); show(el.getAttribute('data-go'))});
+            });
+            var seye = document.getElementById('seye'), spw = document.getElementById('spw');
+            seye.addEventListener('click', function () {
+                var s = spw.type === 'password'; spw.type = s ? 'text' : 'password';
+                seye.textContent = s ? 'Hide' : 'Show'; seye.setAttribute('aria-label', s ? 'Hide password' : 'Show password'); seye.setAttribute('aria-pressed', String(s));
+            });
+            su.addEventListener('submit', function (ev) {
+                ev.preventDefault();
+                var n = document.getElementById('sname'), m = document.getElementById('semail'), p2 = document.getElementById('spw2'), ag = document.getElementById('agree');
+                var mv = m.value.trim();
+                var a = setErr(n, document.getElementById('s1'), !n.value.trim() ? 'Enter your full name.' : '');
+                var b = setErr(m, document.getElementById('s2'), !mv ? 'Enter your email address.' : (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mv) ? 'Enter a valid email, like name@example.com.' : ''));
+                var c = setErr(spw, document.getElementById('s3'), !spw.value ? 'Create a password.' : (spw.value.length < 8 ? 'Password must be at least 8 characters.' : ''));
+                var d = setErr(p2, document.getElementById('s4'), p2.value !== spw.value ? 'Passwords do not match.' : '');
+                var e = !ag.checked; document.getElementById('s5').textContent = e ? 'Accept the terms to continue.' : '';
+                if (!a) {n.focus(); return } if (!b) {m.focus(); return } if (!c) {spw.focus(); return } if (!d) {p2.focus(); return } if (e) {ag.focus(); return }
+                
+                su.style.display = 'none'; document.getElementById('tabs').style.display = 'none';
+                document.getElementById('okh').textContent = 'Account created';
+                document.getElementById('okmsg').textContent = 'Welcome, ' + n.value.trim() + '. Your account is ready.';
+                document.getElementById('ok').classList.add('show');
+            });
+            var f = document.getElementById('f'), em = document.getElementById('email'), pw = document.getElementById('pw');
+            var e1 = document.getElementById('e1'), e2 = document.getElementById('e2'), eye = document.getElementById('eye');
+            eye.addEventListener('click', function () {
+                var s = pw.type === 'password'; pw.type = s ? 'text' : 'password';
+                eye.textContent = s ? 'Hide' : 'Show'; eye.setAttribute('aria-label', s ? 'Hide password' : 'Show password'); eye.setAttribute('aria-pressed', String(s));
+            });
+            function setErr(i, n, m) {n.textContent = m || ''; if (m) {i.setAttribute('aria-invalid', 'true')} else {i.removeAttribute('aria-invalid')} return !m}
+            f.addEventListener('submit', function (ev) {
+                ev.preventDefault(); var v = em.value.trim();
+                var a = setErr(em, e1, !v ? 'Enter your email address.' : (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? 'Enter a valid email, like name@example.com.' : ''));
+                var b = setErr(pw, e2, !pw.value ? 'Enter your password.' : (pw.value.length < 8 ? 'Password must be at least 8 characters.' : ''));
+                if (!a) {em.focus(); return } if (!b) {pw.focus(); return }
+                f.style.display = 'none'; document.getElementById('tabs').style.display = 'none'; document.getElementById('ok').classList.add('show');
+                document.getElementById('okmsg').textContent = 'Signed in as ' + v + '.';
+            });
+        })();
+    </script>
+</body>
+
+</html>
